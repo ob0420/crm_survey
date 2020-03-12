@@ -25,22 +25,28 @@ class CrmInherit(models.Model):
     #             result.append(partner_id)
     #     return result
 
-    survey_line_ids = fields.One2many('survey.survey', 'partner_id',
+    survey_line_ids = fields.Many2many('survey.survey',
                              string='Surveys',
-                             related='partner_id.survey_line_ids')
+                             related='partner_id.survey_line_ids', relation='survey_partner_rel')
     
+    # button1 = 
+    # button2 = 
+
+
+
+
+
 class ResPartner(models.Model):
     
     _inherit = 'res.partner'
 
     participation_line_ids = fields.One2many('survey.user_input', 'partner_id', string='Participations')
-    survey_line_ids = fields.One2many('survey.survey', 'partner_id',
-                             string='Surveys')
+    survey_line_ids = fields.Many2many('survey.survey',
+                             string='Surveys', relation='survey_partner_rel')
 
 class SurveyInherit(models.Model):
     _inherit = "survey.survey"
 
-    survey_id = fields.Many2one('crm.lead', string='Survey', ondelete='cascade') 
     partner_id = fields.Many2many('res.partner', string='Partners', relation='survey_partner_rel')
 
 
@@ -48,9 +54,3 @@ class SurveyUserInputInherit(models.Model):
     _inherit = "survey.user_input"
 
     agent_id = fields.Many2one(string='Agent', comodel_name='res.users', default=lambda self: self.env.user)
-
-
-
-
-
-  

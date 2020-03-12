@@ -6,13 +6,24 @@
 		   <field name="inherit_id" ref="crm.crm_lead_view_form"/>
 		   <field name="priority" eval="50" />  
 		   <field name="arch" type="xml">
+				<!-- <div class="oe_button_box" name="button_box">
+						<button name="action_survey_user_input"
+								type="object"
+								class="oe_stat_button"
+								attrs="{'invisible': [('access_mode', '=', 'public')]}"
+								icon="fa-envelope-o">
+								<field string="Fill Survey" name="fill_survey"/>
+						</button>
+				</div> -->
 			   <notebook position="inside">
                     <page string="Survey" attrs="{'invisible': [('partner_id', '=', False)]}">
 					<field name="survey_line_ids" widget="section_and_note_one2many" mode="tree,kanban">
 						<group>
-						<tree editable="bottom" string="Survey">
+						<tree editable="bottom" string="Surveys">
 							<field name="title"/>
 							<field name="state"/>
+							<field name="partner_id" invisible='True'/>
+							<button name="fill" icon="fa-trophy" title="Fill Survey" aria-label="Fill Survey"/>
 							<field name="answer_count"/>
 							<field name="answer_done_count"/>
 							<field name="success_count"/>
@@ -27,7 +38,7 @@
 					<page string="Participations" attrs="{'invisible': [('partner_id', '=', False)]}">
 					<field name="participation_line_ids" widget="section_and_note_one2many" mode="tree,kanban">
 						<group>
-							<tree editable="bottom" string="Survey User inputs" create="false">
+							<tree editable="top" string="Survey User inputs">
 								<field name="survey_id"/>
 								<field name="partner_id"/>
 								<field name="create_date"/>
@@ -39,7 +50,7 @@
 								<field name="test_entry" invisible="True"/>
 								<field name="quizz_passed"/>
 								<field name="quizz_score"/>
-								</tree>
+							</tree>
 						</group>
 					</field>
                     </page>
@@ -55,7 +66,7 @@
 			   <notebook position="inside">
                     <page string="Partners">
                             <group>
-                                <field name="partner_id"/>
+								<field name='partner_id'/>
                             </group>
                     </page>
                 </notebook>
