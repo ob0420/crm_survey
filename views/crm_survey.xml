@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<record id="crm_lead_view_form_inherit" model="ir.ui.view">
+		   <field name="name">crm.crm_lead_view_form</field>
+		   <field name="model">crm.lead</field>
+		   <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+		   <field name="priority" eval="50" />  
+		   <field name="arch" type="xml">
+			   <notebook position="inside">
+                    <page string="Survey" attrs="{'invisible': [('partner_id', '=', False)]}">
+					<field name="survey_line_ids" widget="section_and_note_one2many" mode="tree,kanban">
+						<group>
+						<tree editable="bottom" string="Survey">
+							<field name="title"/>
+							<field name="state"/>
+							<field name="answer_count"/>
+							<field name="answer_done_count"/>
+							<field name="success_count"/>
+							<field name="success_ratio"/>
+							<field name="answer_score_avg"/>
+							<button name="certificate" icon="fa-trophy" title="Certificate" aria-label="Certificate" attrs="{'invisible': [('certificate', '=', False)]}"/>
+            			</tree>
+						</group>
+						</field>
+                    </page>
+					
+					<page string="Participations" attrs="{'invisible': [('partner_id', '=', False)]}">
+					<field name="participation_line_ids" widget="section_and_note_one2many" mode="tree,kanban">
+						<group>
+							<tree editable="bottom" string="Survey User inputs" create="false">
+								<field name="survey_id"/>
+								<field name="partner_id"/>
+								<field name="create_date"/>
+								<field name="deadline"/>
+								<field name="email"/>
+								<field name="input_type" groups="base.group_no_one"/>
+								<field name="attempt_number"/>
+								<field name="state"/>
+								<field name="test_entry" invisible="True"/>
+								<field name="quizz_passed"/>
+								<field name="quizz_score"/>
+								</tree>
+						</group>
+					</field>
+                    </page>
+                </notebook>
+		   </field>
+</record>
+<record id="survey_view_form_inherit" model="ir.ui.view">
+		   <field name="name">survey.survey_view_form</field>
+		   <field name="model">survey.survey</field>
+		   <field name="inherit_id" ref="survey.survey_form"/>
+		   <field name="priority" eval="50" />  
+		   <field name="arch" type="xml">
+			   <notebook position="inside">
+                    <page string="Partners">
+                            <group>
+                                <field name="partner_id"/>
+                            </group>
+                    </page>
+                </notebook>
+		   </field>
+</record>
+
+<record id="survey_user_input_view_form_inherit" model="ir.ui.view">
+		   <field name="name">survey.survey_user_input_view_form</field>
+		   <field name="model">survey.user_input</field>
+		   <field name="inherit_id" ref="survey.survey_user_input_view_form"/>
+		   <field name="priority" eval="50" />  
+		   <field name="arch" type="xml">
+			   <xpath expr="//field[@name='email']" position="after">
+                        <field name="agent_id"/>
+                    </xpath>
+		   </field>
+</record>
+<record id="survey_user_input_view_tree_inherit" model="ir.ui.view">
+		   <field name="name">survey.survey_user_input_view_tree</field>
+		   <field name="model">survey.user_input</field>
+		   <field name="inherit_id" ref="survey.survey_user_input_view_tree"/>
+		   <field name="priority" eval="50" />  
+		   <field name="arch" type="xml">
+			   <xpath expr="//field[@name='deadline']" position="after">
+                        <field name="agent_id"/>
+                    </xpath>
+		   </field>
+</record>
+
+<record id="survey_survey_tree_inherit" model="ir.ui.view">
+		   <field name="name">survey.survey_tree</field>
+		   <field name="model">survey.survey</field>
+		   <field name="inherit_id" ref="survey.survey_tree"/>
+		   <field name="priority" eval="50" />  
+		   <field name="arch" type="xml">
+			   <xpath expr="//field[@name='state']" position="after">
+                        <field name="partner_id" widget='many2many_tags'/>
+                    </xpath>
+		   </field>
+</record>
+
+</odoo>
